@@ -1,0 +1,39 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.42.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 5797f6f080b2b9c78ff4e14eb23e06e95941c4d1 Build.PL
+SHA1 5303414bcdd4f747047043c3289ec2773a2e96dd Changes
+SHA1 f8b74ed689b96cf932abb2030d72316885c9ed42 MANIFEST
+SHA1 1ef784b97f7e3a26242a5003afbbd453fd05da33 META.yml
+SHA1 9a85d32e7621c35e809065cd74e81caf9bd12741 Makefile.PL
+SHA1 f044ee2bda98fbeb8e2d76b6c22a8b396a8efb1b lib/Test/Legacy.pm
+SHA1 32e5d81c46173c204c07bfb1d2a7b379a2eaf026 t/05_about_verbose.t
+SHA1 f24bf68747d23a876ab71fcad5f4d4650134bc43 t/Legacy.t
+SHA1 febf296a76fd9437e4802cd1a850ca0b00bf24e8 t/fail.t
+SHA1 7e9261957765315a344588d2298f56a878dc47b5 t/mix.t
+SHA1 40b4338c0a7b14fd39c41c282d9575f0a083b151 t/multiline.t
+SHA1 fc1599c96b70af54e3443d6d017aa8a4c4e08507 t/onfail.t
+SHA1 a230732fb02a12b0b0a6671dec73265bc8280970 t/qr.t
+SHA1 51fd425b26e4c416f57f85fc274a0a1bc77b5934 t/skip.t
+SHA1 d30a98c14c34936e89de84b6d993fff25263bf93 t/success.t
+SHA1 58b432d571bf21ade6a6c82de4eab2f1b85c58ad t/todo.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (Darwin)
+
+iD8DBQFBwCYxT4Li3Cw/PzQRApoWAKCFEpYvDjgp0PMn9GP0SF712e8yEACeOp4R
+qOwaZUzi8RwogPZAWmA+seY=
+=VKFx
+-----END PGP SIGNATURE-----

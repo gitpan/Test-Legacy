@@ -75,6 +75,8 @@ L<Test>, L<Test::More>
 
 package Test::Legacy;
 
+require 5.004_05;
+
 use strict;
 use vars qw($VERSION
             @ISA @EXPORT @EXPORT_OK
@@ -82,7 +84,7 @@ use vars qw($VERSION
             $ntest
            );
 
-$VERSION        = '1.2500_01';
+$VERSION        = '1.2501';
 
 
 require Exporter;
@@ -100,7 +102,7 @@ my $TB   = Test::Builder->new;
 my $Self = { todo => {}, onfail => sub {} };
 
 
-tie $TESTOUT, 'Test::Legacy::FH', $TB, 'output';
+tie $TESTOUT, 'Test::Legacy::FH', $TB, 'output', 'todo_output';
 tie $TESTERR, 'Test::Legacy::FH', $TB, 'failure_output';
 
 tie $ntest, 'Test::Legacy::ntest', $TB;
@@ -111,6 +113,17 @@ sub _print {
                      # print
 
     print $TESTOUT @_ 
+}
+
+
+sub import {
+    my $class = shift;
+
+    my $caller = caller;
+
+    $TB->exported_to($caller);
+
+    $class->export_to_level(1, $class, @_);
 }
 
 
@@ -162,7 +175,7 @@ sub _make_faildetail {
     my $tb = shift;
 
     # package, repetition, result
-    
+
 }
 
 
@@ -177,12 +190,18 @@ sub ok ($;$$) {
     my($got, $expected, $diag) = @_;
     ($got, $expected) = map _to_value($_), ($got, $expected);
 
-    my $caller = caller;
+    my($caller, $file, $line) = caller;
 
-    no strict 'refs';
-    local ${ $caller.'::TODO' };
+    # local doesn't work with soft refs in 5.5.4.  So we do it manually.
+    my $todo;
+    {
+        no strict 'refs';
+        $todo = \${ $caller .'::TODO' };
+    }
+    my $orig_todo = $$todo;
+
     if( $Self->{todo}{$TB->current_test + 1} ) {
-        ${ $caller.'::TODO' } = ' TODO?!';
+        $$todo = "set in plan, $file at line $line";
     }
 
     my $ok = 0;
@@ -195,6 +214,8 @@ sub ok ($;$$) {
     else {
         $ok = $TB->is_eq($got, $expected);
     }
+
+    $$todo = $orig_todo;
 
     return $ok;
 }
@@ -216,24 +237,28 @@ sub skip ($;$$$) {
 package Test::Legacy::FH;
 
 sub TIESCALAR {
-    my($class, $tb, $method) = @_;
-    bless { tb => $tb, method => $method }, $_[0];
+    my($class, $tb, @methods) = @_;
+    bless { tb => $tb, methods => \@methods }, $_[0];
 }
 
 sub STORE {
-    my $self = shift;
+    my($self, $arg) = @_;
 
-    my $tb   = $self->{tb};
-    my $meth = $self->{method};
+    my $tb    = $self->{tb};
+    my @meths = @{ $self->{methods} };
 
-    return $tb->$meth(@_);
+    foreach my $meth (@meths) {
+        $tb->$meth($arg);
+    }
+
+    return $arg;
 }
 
 sub FETCH {
     my $self = shift;
 
-    my $tb   = $self->{tb};
-    my $meth = $self->{method};
+    my $tb    = $self->{tb};
+    my($meth) = @{ $self->{methods} };
 
     return $tb->$meth();
 }
@@ -258,6 +283,3 @@ sub STORE {
 
     return $self->{tb}->current_test($val - 1);
 }
-
-
-    
