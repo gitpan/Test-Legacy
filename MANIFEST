@@ -1,0 +1,16 @@
+Build.PL
+Changes
+lib/Test/Legacy.pm
+Makefile.PL
+MANIFEST
+META.yml
+t/05_about_verbose.t
+t/fail.t
+t/Legacy.t
+# t/mix.t
+t/multiline.t
+# t/onfail.t
+t/qr.t
+t/skip.t
+t/success.t
+# t/todo.t

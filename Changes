@@ -1,0 +1,4 @@
+0.01_01  Sat Dec 11 19:09:38 EST 2004
+    * Hey, it works!  With the exception of two tests failing because of
+      formatting differences, and one failing because onfail isn't fully
+      implemented, this passes Test.pm's test suite!

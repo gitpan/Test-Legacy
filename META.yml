@@ -1,0 +1,22 @@
+--- #YAML:1.0
+name: Test-Legacy
+version: 1.2500_01
+author:
+  - Michael G Schwern E<lt>schwern@pobox.comE<gt>
+abstract: |-
+  Test.pm workalike that plays well with other Test modules
+license: perl
+requires:
+  Test::Builder: 0.21_01
+  perl: 5.4.5
+provides:
+  Test::Legacy:
+    file: lib/Test/Legacy.pm
+    version: 1.2500_01
+  Test::Legacy::FH:
+    file: lib/Test/Legacy.pm
+    version: 1.2500_01
+  Test::Legacy::ntest:
+    file: lib/Test/Legacy.pm
+    version: 1.2500_01
+generated_by: Module::Build version 0.2606
