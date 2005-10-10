@@ -14,22 +14,31 @@ Test::Legacy - Test.pm workalike that plays well with other Test modules
 =head1 DESCRIPTION
 
 Test.pm suffers from the problem of not working well with other Test
-modules.  If you have a test written using Test.pm and want to use,
-for example, Test::Exception you cannot.
+modules.  If you have a test written using Test.pm and want to use another
+module, Test::Exception for example, you cannot.
 
 Test::Legacy is a reimplementation of Test.pm using Test::Builder.
 What this means is Test::Legacy can be used with other Test::Builder
 derived modules (such as Test::More, Test::Exception, and most
 everything released in the last couple years) in the same test script.
 
-Test::Legacy strives to work as much like Test.pm as possible.  It allows
-one to continue to use Test.pm while taking advantage of additional Test
-modules.
+Test::Legacy strives to work as much like Test.pm as possible.  It
+allows one to continue to take advantage of additional Test modules
+without having to immediately rewrite all your tests to use Test::More.
+
+
+=head2 Test::Legacy and Test::More
+
+You're often going to be wanting to use Test::Legacy in conjunction
+with Test::More.  Because they export a bunch of the same functions
+they can get a little annoying to deal with.  Fortunately,
+L<Test::Legacy::More> is provided to smooth things out.
+
 
 =head1 DIFFERENCES
 
 Test::Legacy does have some differences from Test.pm.  Here are the known
-ones.
+ones.  Patches welcome.
 
 =over 4
 
@@ -54,7 +63,7 @@ Michael G Schwern E<lt>schwern@pobox.comE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2004 by Michael G Schwern E<lt>schwern@pobox.comE<gt>.
+Copyright 2004, 2005 by Michael G Schwern E<lt>schwern@pobox.comE<gt>.
 
 This program is free software; you can redistribute it and/or 
 modify it under the same terms as Perl itself.
@@ -68,7 +77,7 @@ This is an emulation of Test.pm 1.25.
 
 =head1 SEE ALSO
 
-L<Test>, L<Test::More>
+L<Test>, L<Test::More>, L<Test::Legacy::More>
 
 =cut
 
@@ -84,7 +93,7 @@ use vars qw($VERSION
             $ntest
            );
 
-$VERSION        = '1.2501';
+$VERSION        = '1.2502';
 
 
 require Exporter;
@@ -283,3 +292,5 @@ sub STORE {
 
     return $self->{tb}->current_test($val - 1);
 }
+
+1;

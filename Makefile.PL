@@ -2,12 +2,12 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
+          'PL_FILES' => {},
           'INSTALLDIRS' => 'site',
+          'NAME' => 'Test::Legacy',
+          'VERSION_FROM' => 'lib/Test/Legacy.pm',
           'PREREQ_PM' => {
                            'Test::Builder' => '0.21_01'
-                         },
-          'VERSION_FROM' => 'lib/Test/Legacy.pm',
-          'NAME' => 'Test::Legacy',
-          'PL_FILES' => {}
+                         }
         )
 ;
